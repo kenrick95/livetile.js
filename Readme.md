@@ -11,6 +11,7 @@ Creating live tile effects on web elements.
 
 ## TODO
 
+- Animate transition between text changes
 - Create tests
-- Create demo
 - Minify js, CSS
+- Pause animation on browser switching to other tab
