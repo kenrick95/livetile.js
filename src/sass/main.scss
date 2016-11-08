@@ -2,11 +2,12 @@ $width: 9em;
 $padding: .3em;
 $font-size: 1em;
 
-div.lt-livetile {
+div.livetile {
     width: $width + 2 * $padding;
     height: $width / 2;
     padding: $padding;
     box-sizing: border-box;
+    position: relative;
 
     .lt-text {
         font-size: $font-size;

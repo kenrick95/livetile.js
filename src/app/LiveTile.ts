@@ -8,30 +8,37 @@ class LiveTile {
     currentTextIndex: number;
     currentText: string;
 
-    constructor(element: HTMLDivElement, title: string, interval: number, text: Array<string>) {
+    constructor(element: HTMLDivElement, title: string, text: Array<string>, interval: number) {
         this.element = element;
         this.title = title;
-        this.interval = interval;
         this.text = text;
-        this.start();
+        this.interval = interval;
 
-        this.titleElement = new HTMLDivElement();
+        this.element.className = "livetile";
+
+        this.titleElement = document.createElement("div");
         this.titleElement.textContent = title;
-        this.textElement = new HTMLDivElement();
+        this.titleElement.className = "lt-title";
+
+        this.textElement = document.createElement("div");
+        this.textElement.className = "lt-text";
 
         this.element.appendChild(this.titleElement);
         this.element.appendChild(this.textElement);
+        
+        this.start();
     }
 
     public start() {
         this.currentTextIndex = this.text.length - 1;
+        this.animate();
     }
     private animate() {
         this.currentTextIndex = (this.currentTextIndex + 1) % this.text.length;
         this.currentText = this.text[this.currentTextIndex];
 
-        this.element.textContent = this.currentText;
+        this.textElement.textContent = this.currentText;
 
-        setTimeout(this.animate, this.interval * 1000);
+        setTimeout(this.animate.bind(this), this.interval * 1000);
     }
 }
