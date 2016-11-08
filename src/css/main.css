@@ -1,0 +1,11 @@
+div.lt-livetile {
+  width: 9.6em;
+  height: 4.5em;
+  padding: 0.3em;
+  box-sizing: border-box; }
+  div.lt-livetile .lt-text {
+    font-size: 1em; }
+  div.lt-livetile .lt-title {
+    position: absolute;
+    bottom: 0.3em;
+    font-size: 1.1em; }

@@ -1,0 +1,19 @@
+$width: 9em;
+$padding: .3em;
+$font-size: 1em;
+
+div.lt-livetile {
+    width: $width + 2 * $padding;
+    height: $width / 2;
+    padding: $padding;
+    box-sizing: border-box;
+
+    .lt-text {
+        font-size: $font-size;
+    }
+    .lt-title {
+        position: absolute;
+        bottom: $padding;
+        font-size: $font-size * 1.1;
+    }
+}
