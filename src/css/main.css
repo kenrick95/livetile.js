@@ -5,7 +5,13 @@ div.livetile {
   box-sizing: border-box;
   position: relative; }
   div.livetile .lt-text {
-    font-size: 1em; }
+    font-size: 1em;
+    height: auto; }
+  div.livetile .lt-text-transition {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease 0s; }
   div.livetile .lt-title {
     position: absolute;
     bottom: 0.3em;
