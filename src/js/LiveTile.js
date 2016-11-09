@@ -15,27 +15,33 @@ var LiveTile = (function () {
         this.element.appendChild(this.titleElement);
         this.element.appendChild(this.dummyElement);
         this.element.appendChild(this.textElement);
-        this.textElement.style.background = "green";
-        this.dummyElement.style.background = "red";
-        this.textElement.classList.add("lt-text-transition");
-        this.dummyElement.classList.add("lt-text-transition");
         this.start();
     }
     LiveTile.prototype.start = function () {
         this.currentTextIndex = this.text.length - 1;
-        this.animate();
+        this.textElement.textContent = this.text[this.currentTextIndex];
+        this.startTransition();
     };
-    LiveTile.prototype.animate = function () {
-        var _this = this;
+    LiveTile.prototype.startTransition = function () {
         this.dummyElement.textContent = this.textElement.textContent;
+        this.dummyElement.style.height = this.textElement.clientHeight + "px";
+        this.textElement.style.height = "0px";
         this.currentTextIndex = (this.currentTextIndex + 1) % this.text.length;
         this.currentText = this.text[this.currentTextIndex];
         this.textElement.textContent = this.currentText;
-        Helper.slideUp(this.textElement);
-        Helper.slideDown(this.textElement);
-        setTimeout(function () {
-            _this.animate();
-        }, this.interval * 1000);
+        window.requestAnimationFrame(this.transition.bind(this));
+    };
+    LiveTile.prototype.transition = function () {
+        if (this.dummyElement.clientHeight === 0) {
+            window.requestAnimationFrame(this.endTransition.bind(this));
+            return;
+        }
+        this.textElement.style.height = (this.textElement.clientHeight + 1) + "px";
+        this.dummyElement.style.height = (this.dummyElement.clientHeight - 1) + "px";
+        window.requestAnimationFrame(this.transition.bind(this));
+    };
+    LiveTile.prototype.endTransition = function () {
+        setTimeout(this.startTransition.bind(this), this.interval * 1000);
     };
     return LiveTile;
 }());
