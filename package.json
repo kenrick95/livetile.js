@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "Lightweight live tile on the web",
   "main": "dist/LiveTile.min.js",
-  "scripts": {},
+  "scripts": {
+    "build": "gulp build",
+    "watch": "gulp watch"
+  },
   "repository": {
     "url": "github.com:kenrick95/livetile.js.git",
     "type": "git"

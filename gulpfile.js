@@ -61,11 +61,16 @@ gulp.task('compile-ts', function () {
     .pipe(gulp.dest(config.tsOutputPath))
 })
 
-// TODO: combine and minify into one file
-gulp.task('minify', function () {
+gulp.task('minify-ts', ['compile-ts'], function () {
   return gulp
     .src(config.allJavaScript)
     .pipe(uglify())
+    .pipe(gulp.dest(config.dist))
+})
+gulp.task('minify-sass', function () {
+  return gulp
+    .src(config.allSass)
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(gulp.dest(config.dist))
 })
 
@@ -98,5 +103,5 @@ gulp.task('watch-ts', function () {
   gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts'])
 })
 gulp.task('watch', ['watch-ts', 'watch-sass'])
-
+gulp.task('build', ['minify-ts', 'minify-sass'])
 gulp.task('default', ['compile-ts', 'sass'])

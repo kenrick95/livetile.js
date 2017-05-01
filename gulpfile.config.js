@@ -1,8 +1,6 @@
 'use strict'
 var GulpConfig = (function () {
   function gulpConfig () {
-    // Got tired of scrolling through all the comments so removed them
-    // Don't hurt me AC :-)
     this.dist = './dist/'
     this.source = './src/'
     this.sourceApp = this.source + 'app/'
