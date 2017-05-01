@@ -1,10 +1,12 @@
 var LiveTile = (function () {
-    function LiveTile(element, title, text, interval) {
+    function LiveTile(element, title, text, interval, offset) {
+        if (offset === void 0) { offset = 0; }
         this.element = element;
         this.title = title;
         this.text = text;
         this.interval = interval;
-        this.element.className = "livetile";
+        this.offset = offset;
+        this.element.classList.add("livetile");
         this.titleElement = document.createElement("div");
         this.titleElement.textContent = title;
         this.titleElement.className = "lt-title";
@@ -20,7 +22,7 @@ var LiveTile = (function () {
     LiveTile.prototype.start = function () {
         this.currentTextIndex = this.text.length - 1;
         this.textElement.textContent = this.text[this.currentTextIndex];
-        this.startTransition();
+        setTimeout(this.startTransition.bind(this), this.offset * 1000);
     };
     LiveTile.prototype.startTransition = function () {
         this.dummyElement.textContent = this.textElement.textContent;

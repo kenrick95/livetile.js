@@ -6,16 +6,18 @@ class LiveTile {
   title: string;
   text: Array<string>;
   interval: number;
+  offset: number;
   currentTextIndex: number;
   currentText: string;
 
-  constructor(element: HTMLDivElement, title: string, text: Array<string>, interval: number) {
+  constructor(element: HTMLDivElement, title: string, text: Array<string>, interval: number, offset: number = 0) {
     this.element = element;
     this.title = title;
     this.text = text;
     this.interval = interval;
+    this.offset = offset;
 
-    this.element.className = "livetile";
+    this.element.classList.add("livetile");
 
     this.titleElement = document.createElement("div");
     this.titleElement.textContent = title;
@@ -37,7 +39,7 @@ class LiveTile {
   public start() {
     this.currentTextIndex = this.text.length - 1;
     this.textElement.textContent = this.text[this.currentTextIndex];
-    this.startTransition();
+    setTimeout(this.startTransition.bind(this), this.offset * 1000);
   }
   private startTransition() {
     this.dummyElement.textContent = this.textElement.textContent;
