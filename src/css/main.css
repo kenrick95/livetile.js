@@ -1,14 +1,25 @@
-div.livetile {
-  width: 9.6em;
-  height: 4.5em;
-  padding: 0.3em;
+.livetile {
+  width: 180px;
+  height: 90px;
   box-sizing: border-box;
-  position: relative; }
-  div.livetile .lt-text {
-    font-size: 1em;
-    height: auto;
-    overflow: hidden; }
-  div.livetile .lt-title {
+  position: relative;
+  overflow: hidden;
+  background: white; }
+  .livetile .lt-text {
     position: absolute;
-    bottom: 0.3em;
-    font-size: 1.1em; }
+    top: 0;
+    left: 0;
+    height: auto;
+    background: inherit;
+    width: 100%;
+    z-index: 0;
+    padding: .2em; }
+  .livetile .lt-text-current {
+    z-index: 1; }
+  .livetile .lt-title {
+    position: absolute;
+    font-size: 1.1em;
+    bottom: 0;
+    width: 100%;
+    z-index: 2;
+    padding: .2em; }

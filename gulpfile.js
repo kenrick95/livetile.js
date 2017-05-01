@@ -1,20 +1,16 @@
-'use strict';
+'use strict'
 
-var gulp = require('gulp'),
-    debug = require('gulp-debug'),
-    inject = require('gulp-inject'),
-    tsc = require('gulp-typescript'),
-    tslint = require('gulp-tslint'),
-    sourcemaps = require('gulp-sourcemaps'),
-    uglify = require('gulp-uglify'),
-    sass = require('gulp-sass'),
-    del = require('del'),
-    Config = require('./gulpfile.config'),
-    tsProject = tsc.createProject('tsconfig.json'),
-    browserSync = require('browser-sync'),
-    superstatic = require( 'superstatic' );
+var gulp = require('gulp')
+var tsc = require('gulp-typescript')
+var tslint = require('gulp-tslint')
+var sourcemaps = require('gulp-sourcemaps')
+var uglify = require('gulp-uglify')
+var sass = require('gulp-sass')
+var del = require('del')
+var Config = require('./gulpfile.config')
+var tsProject = tsc.createProject('tsconfig.json')
 
-var config = new Config();
+var config = new Config()
 
 /**
  * Generates the app.d.ts references file dynamically from all application *.ts files.
@@ -35,83 +31,72 @@ var config = new Config();
  * Lint all custom TypeScript files.
  */
 gulp.task('ts-lint', function () {
-    return gulp.src(config.allTypeScript)
-        .pipe(tslint({
-            formatter: "verbose"
-        }))
-        .pipe(tslint.report());
-});
+  return gulp
+    .src(config.allTypeScript)
+    .pipe(
+      tslint({
+        formatter: 'verbose'
+      })
+    )
+    .pipe(tslint.report())
+})
 
 /**
  * Compile TypeScript and include references to library and app .d.ts files.
  */
 gulp.task('compile-ts', function () {
-    var sourceTsFiles = [config.allTypeScript,                //path to typescript files
-                         config.libraryTypeScriptDefinitions]; //reference to library .d.ts files
-                        
+  var sourceTsFiles = [
+    config.allTypeScript, // path to typescript files
+    config.libraryTypeScriptDefinitions
+  ] // reference to library .d.ts files
 
-    var tsResult = gulp.src(sourceTsFiles)
-                       .pipe(sourcemaps.init())
-                       .pipe(tsProject());
+  var tsResult = gulp
+    .src(sourceTsFiles)
+    .pipe(sourcemaps.init())
+    .pipe(tsProject())
 
-        tsResult.dts.pipe(gulp.dest(config.tsOutputPath));
-        return tsResult.js
-                        .pipe(sourcemaps.write('.'))
-                        .pipe(gulp.dest(config.tsOutputPath));
-});
+  tsResult.dts.pipe(gulp.dest(config.tsOutputPath))
+  return tsResult.js
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(config.tsOutputPath))
+})
 
 // TODO: combine and minify into one file
 gulp.task('minify', function () {
-    return gulp.src(config.allJavaScript)
-        .pipe(uglify())
-        .pipe(gulp.dest(config.dist));
-});
+  return gulp
+    .src(config.allJavaScript)
+    .pipe(uglify())
+    .pipe(gulp.dest(config.dist))
+})
 
- 
 gulp.task('sass', function () {
-    return gulp.src(config.allSass)
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest(config.sassOutputPath));
-});
- 
-gulp.task('sass:watch', function () {
-    gulp.watch(config.allSass, ['sass']);
-});
+  return gulp
+    .src(config.allSass)
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(config.sassOutputPath))
+})
+
+gulp.task('watch-sass', function () {
+  gulp.watch(config.allSass, ['sass'])
+})
 
 /**
  * Remove all generated JavaScript files from TypeScript compilation.
  */
 gulp.task('clean-ts', function (cb) {
   var typeScriptGenFiles = [
-                              config.tsOutputPath +'/**/*.js',    // path to all JS files auto gen'd by editor
-                              config.tsOutputPath +'/**/*.js.map', // path to all sourcemap files auto gen'd by editor
-                              '!' + config.tsOutputPath + '/lib'
-                           ];
+    config.tsOutputPath + '/**/*.js', // path to all JS files auto gen'd by editor
+    config.tsOutputPath + '/**/*.js.map', // path to all sourcemap files auto gen'd by editor
+    '!' + config.tsOutputPath + '/lib'
+  ]
 
   // delete the files
-  del(typeScriptGenFiles, cb);
-});
+  del(typeScriptGenFiles, cb)
+})
 
-gulp.task('watch', function() {
-    gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts']);
-});
+gulp.task('watch-ts', function () {
+  gulp.watch([config.allTypeScript], ['ts-lint', 'compile-ts'])
+})
+gulp.task('watch', ['watch-ts', 'watch-sass'])
 
-gulp.task('serve', ['compile-ts', 'watch'], function() {
-  process.stdout.write('Starting browserSync and superstatic...\n');
-  browserSync({
-    port: 3000,
-    files: ['index.html', '**/*.js'],
-    injectChanges: true,
-    logFileChanges: false,
-    logLevel: 'silent',
-    logPrefix: 'livetilejs',
-    notify: true,
-    reloadDelay: 0,
-    server: {
-      baseDir: './src',
-      middleware: superstatic({ debug: false})
-    }
-  });
-});
-
-gulp.task('default', ['ts-lint', 'compile-ts']);
+gulp.task('default', ['compile-ts', 'sass'])

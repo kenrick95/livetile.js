@@ -9,7 +9,7 @@ var LiveTile = (function () {
         this.titleElement.textContent = title;
         this.titleElement.className = "lt-title";
         this.textElement = document.createElement("div");
-        this.textElement.className = "lt-text";
+        this.textElement.className = "lt-text lt-text-current";
         this.dummyElement = document.createElement("div");
         this.dummyElement.className = "lt-text";
         this.element.appendChild(this.titleElement);
@@ -24,21 +24,18 @@ var LiveTile = (function () {
     };
     LiveTile.prototype.startTransition = function () {
         this.dummyElement.textContent = this.textElement.textContent;
-        this.dummyElement.style.height = this.textElement.clientHeight + "px";
-        this.textElement.style.height = "0px";
+        this.textElement.style.transition = "unset";
+        this.textElement.style.transform = "translateY(" + this.element.clientHeight + "px)";
+        this.textElement.offsetHeight;
         this.currentTextIndex = (this.currentTextIndex + 1) % this.text.length;
         this.currentText = this.text[this.currentTextIndex];
         this.textElement.textContent = this.currentText;
-        window.requestAnimationFrame(this.transition.bind(this));
+        this.transition();
     };
     LiveTile.prototype.transition = function () {
-        if (this.dummyElement.clientHeight === 0) {
-            window.requestAnimationFrame(this.endTransition.bind(this));
-            return;
-        }
-        this.textElement.style.height = (this.textElement.clientHeight + 1) + "px";
-        this.dummyElement.style.height = (this.dummyElement.clientHeight - 1) + "px";
-        window.requestAnimationFrame(this.transition.bind(this));
+        this.textElement.style.transition = "transform 1s ease-out";
+        this.textElement.style.transform = "translateY(0)";
+        setTimeout(this.endTransition.bind(this), 1000);
     };
     LiveTile.prototype.endTransition = function () {
         setTimeout(this.startTransition.bind(this), this.interval * 1000);
