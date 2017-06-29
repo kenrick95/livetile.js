@@ -20,7 +20,7 @@ class LiveTile {
     this.element.classList.add("livetile");
 
     this.titleElement = document.createElement("div");
-    this.titleElement.textContent = title;
+    this.titleElement.innerHTML = title;
     this.titleElement.className = "lt-title";
 
     this.textElement = document.createElement("div");
@@ -38,11 +38,11 @@ class LiveTile {
 
   public start() {
     this.currentTextIndex = this.text.length - 1;
-    this.textElement.textContent = this.text[this.currentTextIndex];
+    this.textElement.innerHTML = this.text[this.currentTextIndex];
     setTimeout(this.startTransition.bind(this), this.offset * 1000);
   }
   private startTransition() {
-    this.dummyElement.textContent = this.textElement.textContent;
+    this.dummyElement.innerHTML = this.textElement.innerHTML;
 
     this.textElement.style.transition = "unset";
     this.textElement.style.transform = `translateY(${this.element.clientHeight}px)`;
@@ -51,7 +51,7 @@ class LiveTile {
     this.currentTextIndex = (this.currentTextIndex + 1) % this.text.length;
     this.currentText = this.text[this.currentTextIndex];
 
-    this.textElement.textContent = this.currentText;
+    this.textElement.innerHTML = this.currentText;
 
     this.transition();
   }

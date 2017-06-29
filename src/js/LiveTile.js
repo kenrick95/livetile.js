@@ -8,7 +8,7 @@ var LiveTile = (function () {
         this.offset = offset;
         this.element.classList.add("livetile");
         this.titleElement = document.createElement("div");
-        this.titleElement.textContent = title;
+        this.titleElement.innerHTML = title;
         this.titleElement.className = "lt-title";
         this.textElement = document.createElement("div");
         this.textElement.className = "lt-text lt-text-current";
@@ -21,17 +21,17 @@ var LiveTile = (function () {
     }
     LiveTile.prototype.start = function () {
         this.currentTextIndex = this.text.length - 1;
-        this.textElement.textContent = this.text[this.currentTextIndex];
+        this.textElement.innerHTML = this.text[this.currentTextIndex];
         setTimeout(this.startTransition.bind(this), this.offset * 1000);
     };
     LiveTile.prototype.startTransition = function () {
-        this.dummyElement.textContent = this.textElement.textContent;
+        this.dummyElement.innerHTML = this.textElement.innerHTML;
         this.textElement.style.transition = "unset";
         this.textElement.style.transform = "translateY(" + this.element.clientHeight + "px)";
         this.textElement.offsetHeight;
         this.currentTextIndex = (this.currentTextIndex + 1) % this.text.length;
         this.currentText = this.text[this.currentTextIndex];
-        this.textElement.textContent = this.currentText;
+        this.textElement.innerHTML = this.currentText;
         this.transition();
     };
     LiveTile.prototype.transition = function () {
