@@ -11,7 +11,14 @@ Creating live tile effects on web elements.
 
 ## TODO
 
+- Clean up src/js and src/css which are generated from ts & scss files
+- Remove dist folder from source control
+- Switch to rollup as bundler?
 - Animate transition between text changes
 - Create tests
-- Minify js, CSS
+- Run tests
 - Pause animation on browser switching to other tab
+
+## Demo
+
+See https://kenrick95.org/

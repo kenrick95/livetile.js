@@ -1,5 +1,5 @@
 var expect = require('chai').expect;
-var liveTile = require('../dist/LiveTile.min.js');
+var liveTile = require('../dist/LiveTile.js');
  
 describe('MainClass', function () {
   it('is contained within LiveTile as CommonJS', function () {

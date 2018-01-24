@@ -1,16 +1,13 @@
 {
   "name": "livetile.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Lightweight live tile on the web",
-  "main": "dist/LiveTile.min.js",
+  "main": "dist/LiveTile.js",
   "scripts": {
     "build": "gulp build",
     "watch": "gulp watch"
   },
-  "repository": {
-    "url": "github.com:kenrick95/livetile.js.git",
-    "type": "git"
-  },
+  "repository": "https://github.com/kenrick95/livetile.js",
   "author": "Kenrick",
   "license": "MIT",
   "devDependencies": {
