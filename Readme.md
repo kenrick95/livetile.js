@@ -19,6 +19,18 @@ Creating live tile effects on web elements.
 - Run tests
 - Pause animation on browser switching to other tab
 
+## Install
+
+```
+npm install --save livetile
+```
+
+or
+
+```
+yarn add livetile
+```
+
 ## Demo
 
 See https://kenrick95.org/
